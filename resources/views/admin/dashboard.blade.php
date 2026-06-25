@@ -56,7 +56,7 @@
                             <p class="text-sm text-gray-500 mt-1">Approve, ban, or delete sellers</p>
                         </a>
 
-                        <a href="#" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition">
+                        <a href="{{ route('admin.categories.index') }}" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition">
                             <span class="text-lg">📁</span>
                             <span class="font-medium">Manage Categories</span>
                             <p class="text-sm text-gray-500 mt-1">Add, edit, or delete categories</p>

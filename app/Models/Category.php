@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-#[fillable(['name', 'parent_id', 'image'])]
+
 class Category extends Model
 {
+
+    protected $fillable = ['name', 'parent_id', 'image'];
+
      public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

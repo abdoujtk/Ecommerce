@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,9 +13,22 @@ Route::get('/', function () {
 require __DIR__.'/auth.php';
 
 // Admin routes
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {  
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    // Sellers
+    Route::get('/sellers', [SellerController::class, 'index'])->name('sellers.index');
+    Route::post('/sellers/{user}/approve', [SellerController::class, 'approve'])->name('sellers.approve');
+    Route::post('/sellers/{user}/ban', [SellerController::class, 'ban'])->name('sellers.ban');
+    Route::post('/sellers/{user}/unban', [SellerController::class, 'unban'])->name('sellers.unban');
+    Route::delete('/sellers/{user}', [SellerController::class, 'destroy'])->name('sellers.destroy');
+
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     
 });
 

@@ -21,6 +21,9 @@
             {{ __('Dashboard') }}
         </x-nav-link>
     @endif
+    <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+        {{ __('Categories') }}
+    </x-nav-link>
 </div>
             </div>
 
