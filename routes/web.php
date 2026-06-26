@@ -4,6 +4,9 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Seller\StoreController;
+use App\Http\Controllers\Seller\SellerController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +39,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function () {
 
     Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
+
+    // Store
+    Route::get('/store/edit', [StoreController::class, 'edit'])->name('store.edit');
+    Route::put('/store', [StoreController::class, 'update'])->name('store.update');
 
 });
 
