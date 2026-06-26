@@ -2,15 +2,26 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[fillable([
-        'store_id', 'category_id', 'name', 'description',
-        'price', 'view_count', 'unique_link', 'is_active'
-    ])]
+#[Fillable([
+    'store_id',
+    'category_id',
+    'name',
+    'description',
+    'price',
+    'view_count',
+    'unique_link',
+    'is_active',
+])]
+
 class Product extends Model
 {
-     public function store()
+    use HasFactory;
+
+    public function store()
     {
         return $this->belongsTo(Store::class);
     }

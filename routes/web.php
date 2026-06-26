@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Seller\StoreController;
 use App\Http\Controllers\Seller\SellerController;
+use App\Http\Controllers\Seller\ProductController;
+use App\Http\Controllers\Seller\OrderController;
+use App\Http\Controllers\Seller\ProductImageController;
+use App\Http\Controllers\Seller\ReviewController;
 
 
 Route::get('/', function () {
@@ -43,6 +47,15 @@ Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function (
     // Store
     Route::get('/store/edit', [StoreController::class, 'edit'])->name('store.edit');
     Route::put('/store', [StoreController::class, 'update'])->name('store.update');
+
+    // Products
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggle-active');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 });
 
