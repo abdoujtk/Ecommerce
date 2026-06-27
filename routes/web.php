@@ -13,9 +13,9 @@ use App\Http\Controllers\Seller\ReviewController;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Breeze auth routes (login, register, logout, password reset)
 require __DIR__.'/auth.php';
