@@ -12,6 +12,7 @@ use App\Http\Controllers\Seller\ProductImageController;
 use App\Http\Controllers\Seller\ReviewController;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -56,6 +57,14 @@ Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggle-active');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+
+// Orders
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
+Route::post('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
+Route::post('/orders/{order}/mark-delivered', [OrderController::class, 'markDelivered'])->name('orders.mark-delivered');
 
 });
 

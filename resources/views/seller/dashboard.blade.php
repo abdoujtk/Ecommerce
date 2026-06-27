@@ -69,9 +69,9 @@
                             <a href="{{ route('seller.products.index') }}" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100">
                                 📦 My Products
                             </a>
-                            {{-- <a href="{{ route('seller.orders.index') }}" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100">
+                            <a href="{{ route('seller.orders.index') }}" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100">
                                 📋 Orders
-                            </a> --}}
+                            </a>
                             <a href="{{ route('seller.store.edit') }}" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100">
                                 🏪 Store Profile
                             </a>
