@@ -11,6 +11,7 @@ use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\ProductImageController;
 use App\Http\Controllers\Seller\ReviewController;
 use App\Http\Controllers\ProductPageController;
+use App\Http\Controllers\RatingController;
 
 
 
@@ -23,6 +24,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Product page (public)
 Route::get('/p/{uniqueLink}', [ProductPageController::class, 'show'])->name('product.page');
 Route::post('/p/{uniqueLink}/order', [ProductPageController::class, 'order'])->name('product.order');
+
+
+// Rating page (public)
+Route::get('/rate/{ratingCode}', [RatingController::class, 'show'])->name('rating.show');
+Route::post('/rate/{ratingCode}', [RatingController::class, 'store'])->name('rating.store');
 
 // Breeze auth routes (login, register, logout, password reset)
 require __DIR__.'/auth.php';

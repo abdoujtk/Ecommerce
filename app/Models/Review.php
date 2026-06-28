@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 
 #[fillable(['order_id', 'product_id', 'store_id', 'rating', 'comment'])]
