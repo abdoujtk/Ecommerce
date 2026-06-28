@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 #[fillable(['product_id', 'viewed_at', 'source'])]
 class ProductView extends Model

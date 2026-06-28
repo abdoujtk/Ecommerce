@@ -10,12 +10,19 @@ use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\ProductImageController;
 use App\Http\Controllers\Seller\ReviewController;
+use App\Http\Controllers\ProductPageController;
 
 
 
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
+
+// Product page (public)
+Route::get('/p/{uniqueLink}', [ProductPageController::class, 'show'])->name('product.page');
+Route::post('/p/{uniqueLink}/order', [ProductPageController::class, 'order'])->name('product.order');
 
 // Breeze auth routes (login, register, logout, password reset)
 require __DIR__.'/auth.php';
