@@ -12,6 +12,7 @@ use App\Http\Controllers\Seller\ProductImageController;
 use App\Http\Controllers\Seller\ReviewController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 
 
@@ -50,7 +51,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
     
+
+    // Inside admin routes group:
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        
 });
 
 // Seller routes
@@ -62,22 +68,22 @@ Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function (
     Route::get('/store/edit', [StoreController::class, 'edit'])->name('store.edit');
     Route::put('/store', [StoreController::class, 'update'])->name('store.update');
 
-    // Products
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
-Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggle-active');
-Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+        // Products
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::post('/products/{product}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggle-active');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 
 
-// Orders
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
-Route::post('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
-Route::post('/orders/{order}/mark-delivered', [OrderController::class, 'markDelivered'])->name('orders.mark-delivered');
+        // Orders
+        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::post('/orders/{order}/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
+        Route::post('/orders/{order}/reject', [OrderController::class, 'reject'])->name('orders.reject');
+        Route::post('/orders/{order}/mark-delivered', [OrderController::class, 'markDelivered'])->name('orders.mark-delivered');
 
 });
 

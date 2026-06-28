@@ -62,7 +62,9 @@
                             <p class="text-sm text-gray-500 mt-1">Add, edit, or delete categories</p>
                         </a>
 
-                        <a href="#" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
+                        
+
+                        <a href="{{ route('admin.orders.index') }}" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
                             <span class="text-lg">📦</span>
                             <span class="font-medium">View All Orders</span>
                             <p class="text-sm text-gray-500 mt-1">Monitor all orders across stores</p>
