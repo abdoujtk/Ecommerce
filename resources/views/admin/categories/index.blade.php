@@ -1,147 +1,96 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Categories') }}
-        </h2>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">{{ __('Manage Categories') }}</h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
-            {{-- Success Message --}}
             @if (session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    {{ session('success') }}
-                </div>
+                <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50">{{ session('success') }}</div>
             @endif
-
-            {{-- Error Message --}}
             @if (session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                    {{ session('error') }}
-                </div>
+                <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50">{{ session('error') }}</div>
             @endif
 
-            {{-- Add Main Category Form --}}
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6">
-                    <h3 class="text-lg font-bold mb-4">Add Main Category</h3>
-                    <form action="{{ route('admin.categories.store') }}" method="POST">
+            {{-- Add Main Category --}}
+            <div class="bg-white rounded-lg shadow mb-4">
+                <div class="p-4">
+                    <form action="{{ route('admin.categories.store') }}" method="POST" class="flex gap-3 items-end">
                         @csrf
-                        <div class="flex gap-4 items-end">
-                            <div class="flex-1">
-                                <x-input-label for="name" value="Category Name" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" required />
-                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                            </div>
-                            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                                Add
-                            </button>
+                        <div class="flex-1">
+                            <input type="text" name="name" placeholder="New main category..."
+                                class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" required>
                         </div>
                         <input type="hidden" name="parent_id" value="">
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">Add</button>
                     </form>
                 </div>
             </div>
 
             {{-- Categories List --}}
             @foreach ($mainCategories as $mainCategory)
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-4">
-                    {{-- Main Category --}}
-                    <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+                <div class="bg-white rounded-lg shadow mb-3">
+                    <div class="p-4 flex justify-between items-center bg-gray-50 rounded-t-lg border-b">
                         <div>
-                            <span class="font-bold text-lg">📁 {{ $mainCategory->name }}</span>
-                            <span class="text-sm text-gray-500 ml-2">
-                                ({{ $mainCategory->children->count() }} subcategories)
-                            </span>
+                            <span class="font-bold text-gray-900">📁 {{ $mainCategory->name }}</span>
+                            <span class="text-xs text-gray-500 ml-2">({{ $mainCategory->children->count() }} subcategories)</span>
                         </div>
                         <div class="flex gap-2">
-                            {{-- Edit Main Category Button --}}
                             <button onclick="document.getElementById('edit-main-{{ $mainCategory->id }}').classList.toggle('hidden')"
-                                class="text-blue-600 hover:text-blue-900 text-sm">
-                                Edit
-                            </button>
-
-                            {{-- Delete Main Category --}}
-                            <form action="{{ route('admin.categories.destroy', $mainCategory) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 text-sm"
-                                    onclick="return confirm('Delete this category?')">
-                                    Delete
-                                </button>
+                                class="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
+                            <form action="{{ route('admin.categories.destroy', $mainCategory) }}" method="POST">
+                                @csrf @method('DELETE')
+                                <button class="text-red-600 hover:text-red-800 text-sm font-medium" onclick="return confirm('Delete?')">Del</button>
                             </form>
                         </div>
                     </div>
 
-                    {{-- Edit Main Category Form (hidden by default) --}}
-                    <div id="edit-main-{{ $mainCategory->id }}" class="hidden p-4 bg-gray-50 border-b">
-                        <form action="{{ route('admin.categories.update', $mainCategory) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="flex gap-4 items-end">
-                                <div class="flex-1">
-                                    <x-text-input name="name" type="text" class="mt-1 block w-full" value="{{ $mainCategory->name }}" required />
-                                </div>
-                                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                                    Save
-                                </button>
+                    <div id="edit-main-{{ $mainCategory->id }}" class="hidden p-4 border-b bg-gray-50">
+                        <form action="{{ route('admin.categories.update', $mainCategory) }}" method="POST" class="flex gap-3 items-end">
+                            @csrf @method('PUT')
+                            <div class="flex-1">
+                                <input type="text" name="name" value="{{ $mainCategory->name }}"
+                                    class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" required>
                             </div>
+                            <button type="submit" class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2.5">Save</button>
                         </form>
                     </div>
 
-                    {{-- Subcategories --}}
                     @foreach ($mainCategory->children as $subcategory)
-                        <div class="p-3 pl-10 border-b flex justify-between items-center">
-                            <span>↳ {{ $subcategory->name }}</span>
+                        <div class="px-6 py-3 flex justify-between items-center border-b hover:bg-gray-50">
+                            <span class="text-sm">↳ {{ $subcategory->name }}</span>
                             <div class="flex gap-2">
-                                {{-- Edit Subcategory --}}
                                 <button onclick="document.getElementById('edit-sub-{{ $subcategory->id }}').classList.toggle('hidden')"
-                                    class="text-blue-600 hover:text-blue-900 text-sm">
-                                    Edit
-                                </button>
-
-                                {{-- Delete Subcategory --}}
-                                <form action="{{ route('admin.categories.destroy', $subcategory) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900 text-sm"
-                                        onclick="return confirm('Delete this subcategory?')">
-                                        Delete
-                                    </button>
+                                    class="text-blue-600 hover:text-blue-800 text-xs font-medium">Edit</button>
+                                <form action="{{ route('admin.categories.destroy', $subcategory) }}" method="POST">
+                                    @csrf @method('DELETE')
+                                    <button class="text-red-600 hover:text-red-800 text-xs font-medium" onclick="return confirm('Delete?')">Del</button>
                                 </form>
                             </div>
                         </div>
 
-                        {{-- Edit Subcategory Form (hidden by default) --}}
-                        <div id="edit-sub-{{ $subcategory->id }}" class="hidden p-3 pl-10 bg-gray-50 border-b">
-                            <form action="{{ route('admin.categories.update', $subcategory) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <div class="flex gap-4 items-end">
-                                    <div class="flex-1">
-                                        <x-text-input name="name" type="text" class="mt-1 block w-full" value="{{ $subcategory->name }}" required />
-                                    </div>
-                                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-                                        Save
-                                    </button>
+                        <div id="edit-sub-{{ $subcategory->id }}" class="hidden px-6 py-3 border-b bg-gray-50">
+                            <form action="{{ route('admin.categories.update', $subcategory) }}" method="POST" class="flex gap-3 items-end">
+                                @csrf @method('PUT')
+                                <div class="flex-1">
+                                    <input type="text" name="name" value="{{ $subcategory->name }}"
+                                        class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" required>
                                 </div>
+                                <button type="submit" class="text-white bg-green-600 hover:bg-green-700 font-medium rounded-lg text-sm px-4 py-2.5">Save</button>
                             </form>
                         </div>
                     @endforeach
 
-                    {{-- Add Subcategory Form --}}
-                    <div class="p-3 pl-10">
-                        <form action="{{ route('admin.categories.store') }}" method="POST">
+                    <div class="px-6 py-3">
+                        <form action="{{ route('admin.categories.store') }}" method="POST" class="flex gap-3 items-end">
                             @csrf
                             <input type="hidden" name="parent_id" value="{{ $mainCategory->id }}">
-                            <div class="flex gap-4 items-end">
-                                <div class="flex-1">
-                                    <x-text-input name="name" type="text" class="mt-1 block w-full" placeholder="New subcategory name..." required />
-                                </div>
-                                <button type="submit" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 text-sm">
-                                    + Add Subcategory
-                                </button>
+                            <div class="flex-1">
+                                <input type="text" name="name" placeholder="New subcategory..."
+                                    class="block w-full p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" required>
                             </div>
+                            <button type="submit" class="text-white bg-gray-600 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2.5">+ Add</button>
                         </form>
                     </div>
                 </div>
