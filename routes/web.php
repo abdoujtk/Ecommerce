@@ -5,14 +5,15 @@ use App\Http\Controllers\Seller\DashboardController as SellerDashboardController
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Seller\StoreController;
-use App\Http\Controllers\Seller\SellerController;
+use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\OrderController;
-use App\Http\Controllers\Seller\ProductImageController;
-use App\Http\Controllers\Seller\ReviewController;
+
+
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+
 
 
 
