@@ -1,3 +1,4 @@
+{{-- Souk Marketplace --}}
 <x-guest-layout title="Souk - Marketplace">
     {{-- Search --}}
     <form action="{{ route('home') }}" method="GET" class="mb-6">
