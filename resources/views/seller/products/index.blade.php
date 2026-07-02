@@ -1,12 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ __('My Products') }}
             </h2>
             <a href="{{ route('seller.products.create') }}"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                + Add Product
+                class="inline-flex items-center gap-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full sm:w-auto text-center justify-center">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+                </svg>
+                Add Product
             </a>
         </div>
     </x-slot>
@@ -27,6 +30,13 @@
                         <div class="text-center py-12">
                             <p class="text-gray-400 text-lg mb-2">📦</p>
                             <p class="text-gray-500">No products yet. Add your first product!</p>
+                            <a href="{{ route('seller.products.create') }}"
+                                class="inline-flex items-center gap-2 mt-4 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+                                </svg>
+                                Add Your First Product
+                            </a>
                         </div>
                     @else
                         <div class="overflow-x-auto">
@@ -90,6 +100,16 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    {{-- Floating Add Button (Mobile) --}}
+    <div class="fixed bottom-6 right-6 sm:hidden z-50">
+        <a href="{{ route('seller.products.create') }}"
+            class="flex items-center justify-center w-14 h-14 text-white bg-blue-700 rounded-full shadow-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+            <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/>
+            </svg>
+        </a>
     </div>
 
     <script>
