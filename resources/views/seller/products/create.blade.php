@@ -66,9 +66,10 @@
                         </div>
 
                         <div class="flex gap-4">
-                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                                Create Product
-                            </button>
+                            <button type="submit" 
+                            class="cursor-pointer relative z-10 w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-6 py-3 text-center">
+                            Create Product
+                        </button>
                             <a href="{{ route('seller.products.index') }}" class="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400">
                                 Cancel
                             </a>
