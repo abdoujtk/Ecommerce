@@ -16,8 +16,15 @@
                 <span class="self-center text-xl font-semibold whitespace-nowrap text-blue-700">🛍️ Souk</span>
             </a>
             <div class="flex items-center gap-3">
-                <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-700 text-sm font-medium">Seller Login</a>
-                <a href="{{ route('register') }}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Start Selling</a>
+                @auth
+    <a href="{{ auth()->user()->isAdmin() ? route('admin.dashboard') : route('seller.dashboard') }}" 
+       class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">
+        Dashboard
+    </a>
+@else
+    <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-700 text-sm font-medium">Seller Login</a>
+    <a href="{{ route('register') }}" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2">Start Selling</a>
+@endauth
             </div>
         </div>
     </nav>
