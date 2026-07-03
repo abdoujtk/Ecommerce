@@ -56,7 +56,7 @@
                         {{-- Images --}}
                         <div class="mb-4">
                             <x-input-label for="images" value="Images (first image will be the main image)" />
-                            <input id="images" name="images[]" type="file" multiple accept="image/*" capture="environment"
+                           <input id="images" name="images[]" type="file" multiple accept="image/*"
                                 class="mt-1 block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded file:border-0
