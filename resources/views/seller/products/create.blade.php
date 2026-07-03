@@ -12,15 +12,17 @@
                     <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" id="product-form">
                         @csrf
                         {{-- Show all errors --}}
-@if ($errors->any())
-<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-    <ul class="list-disc list-inside">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+                        @if ($errors->any())
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                            <ul class="list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    @if (is_string($error))
+                                        <li>{{ $error }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
 
                         {{-- Name --}}
                         <div class="mb-4">
@@ -74,8 +76,8 @@
         file:rounded file:border-0
         file:text-sm file:font-semibold
         file:bg-blue-50 file:text-blue-700" />
-    <x-input-error :messages="$errors->get('images')" class="mt-2" />
-    <x-input-error :messages="$errors->get('images.*')" class="mt-2" />
+    
+    
 </div>
 
                         <div class="flex gap-4">
