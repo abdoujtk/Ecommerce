@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Intervention\Image\Laravel\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -85,7 +84,7 @@ foreach ($request->file('images') as $index => $image) {
     
     $product->images()->create([
         'image_path' => $path,
-        'is_main' => $index === 0,
+        'is_main' => false,
         'order' => $index + 1,
     ]);
 }
@@ -135,21 +134,19 @@ foreach ($request->file('images') as $index => $image) {
             'category_id' => $validated['category_id'],
         ]);
 
-        // Upload new images if provided
-        // Upload images
-foreach ($request->file('images') as $index => $image) {
-    // Resize image to max 800px width, keep aspect ratio
-    $resized = Image::read($image)->scale(width: 800);
-    
-    // Save to storage
-    $path = 'products/' . uniqid() . '.webp';
-    Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
-    
-    $product->images()->create([
-        'image_path' => $path,
-        'is_main' => $index === 0,
-        'order' => $index + 1,
-    ]);
+       // Upload new images if provided
+if ($request->hasFile('images')) {
+    foreach ($request->file('images') as $image) {
+        $resized = Image::read($image)->scale(width: 800);
+        $path = 'products/' . uniqid() . '.webp';
+        Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
+        
+        $product->images()->create([
+            'image_path' => $path,
+            'is_main' => false, // New images are NOT main unless you want to change that
+            'order' => $product->images()->count() + 1,
+        ]);
+    }
 }
 
         return redirect()->route('seller.products.index')
