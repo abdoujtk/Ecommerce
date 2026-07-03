@@ -55,13 +55,15 @@
 
                         {{-- Images --}}
                         <div class="mb-4">
-                            <x-input-label for="images" value="Images (first image will be the main image)" />
-                            <input id="images" name="images[]" type="file" multiple
-                            class="mt-1 block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded file:border-0
-                            file:text-sm file:font-semibold
-                            file:bg-blue-50 file:text-blue-700" required />
+                            <x-input-label value="Images (first image will be the main image)" />
+                            <div id="image-preview" class="flex gap-2 mt-2 mb-2 flex-wrap"></div>
+                            <input id="images" name="images[]" type="file" multiple accept="image/*" required
+                                onchange="previewImages(event)"
+                                class="mt-1 block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700" />
                             <x-input-error :messages="$errors->get('images')" class="mt-2" />
                         </div>
 
@@ -88,14 +90,25 @@
     </div>
 
     <script>
+        function previewImages(event) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            for (let file of event.target.files) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.className = 'w-16 h-16 object-cover rounded border';
+                preview.appendChild(img);
+            }
+        }
+
         const form = document.getElementById('product-form');
         const btn = document.getElementById('submit-btn');
         const btnText = document.getElementById('btn-text');
         const btnLoading = document.getElementById('btn-loading');
 
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function() {
             btn.disabled = true;
-            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btn.classList.add('opacity-50');
             btnText.classList.add('hidden');
             btnLoading.classList.remove('hidden');
         });
