@@ -9,7 +9,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" id="product-form">
                         @csrf
 
                         {{-- Name --}}
@@ -56,7 +56,7 @@
                         {{-- Images --}}
                         <div class="mb-4">
                             <x-input-label for="images" value="Images (first image will be the main image)" />
-                            <input id="images" name="images[]" type="file" multiple accept="image/*"
+                            <input id="images" name="images[]" type="file" multiple accept="image/*" capture="environment"
                                 class="mt-1 block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded file:border-0
@@ -66,9 +66,16 @@
                         </div>
 
                         <div class="flex gap-4">
-                            <button type="submit" 
+                            <button type="submit" id="submit-btn"
                             class="cursor-pointer relative z-10 w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-6 py-3 text-center">
-                            Create Product
+                            <span id="btn-text">Create Product</span>
+                            <span id="btn-loading" class="hidden">
+                                <svg class="inline w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                </svg>
+                                Uploading...
+                            </span>
                         </button>
                             <a href="{{ route('seller.products.index') }}" class="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400">
                                 Cancel
@@ -79,4 +86,17 @@
             </div>
         </div>
     </div>
+    <script>
+        const form = document.getElementById('product-form');
+        const btn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnLoading = document.getElementById('btn-loading');
+    
+        form.addEventListener('submit', function() {
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+            btnText.classList.add('hidden');
+            btnLoading.classList.remove('hidden');
+        });
+    </script>
 </x-app-layout>
