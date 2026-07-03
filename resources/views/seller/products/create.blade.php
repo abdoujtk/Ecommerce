@@ -11,6 +11,16 @@
                 <div class="p-6">
                     <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data" id="product-form">
                         @csrf
+                        {{-- Show all errors --}}
+@if ($errors->any())
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <ul class="list-disc list-inside">
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
                         {{-- Name --}}
                         <div class="mb-4">
@@ -53,19 +63,20 @@
                             <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                         </div>
 
-                        {{-- Images --}}
-                        <div class="mb-4">
-                            <x-input-label value="Images (first image will be the main image)" />
-                            <div id="image-preview" class="flex gap-2 mt-2 mb-2 flex-wrap"></div>
-                            <input id="images" name="images[]" type="file" multiple accept="image/*" required
-                                onchange="previewImages(event)"
-                                class="mt-1 block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700" />
-                            <x-input-error :messages="$errors->get('images')" class="mt-2" />
-                        </div>
+                      {{-- Images --}}
+<div class="mb-4">
+    <x-input-label value="Images (first image will be the main image)" />
+    <div id="image-preview" class="flex gap-2 mt-2 mb-2 flex-wrap"></div>
+    <input id="images" name="images[]" type="file" multiple accept="image/*" required
+        onchange="previewImages(event)"
+        class="mt-1 block w-full text-sm text-gray-500
+        file:mr-4 file:py-2 file:px-4
+        file:rounded file:border-0
+        file:text-sm file:font-semibold
+        file:bg-blue-50 file:text-blue-700" />
+    <x-input-error :messages="$errors->get('images')" class="mt-2" />
+    <x-input-error :messages="$errors->get('images.*')" class="mt-2" />
+</div>
 
                         <div class="flex gap-4">
                             <button type="submit" id="submit-btn"
