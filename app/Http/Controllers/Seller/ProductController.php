@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
-use Intervention\Image\Laravel\Facades\Image;
+
 
 class ProductController extends Controller
 {
@@ -73,18 +73,13 @@ class ProductController extends Controller
             'is_active' => Auth::user()->is_approved, // Only active if seller is approved
         ]);
 
-        // Upload images
+       // Upload images
 foreach ($request->file('images') as $index => $image) {
-    // Resize image to max 800px width, keep aspect ratio
-    $resized = Image::read($image)->scale(width: 800);
-    
-    // Save to storage
-    $path = 'products/' . uniqid() . '.webp';
-    Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
+    $path = $image->store('products', 'public');
     
     $product->images()->create([
         'image_path' => $path,
-        'is_main' => false,
+        'is_main' => $index === 0,
         'order' => $index + 1,
     ]);
 }
@@ -134,20 +129,17 @@ foreach ($request->file('images') as $index => $image) {
             'category_id' => $validated['category_id'],
         ]);
 
-       // Upload new images if provided
-if ($request->hasFile('images')) {
-    foreach ($request->file('images') as $image) {
-        $resized = Image::read($image)->scale(width: 800);
-        $path = 'products/' . uniqid() . '.webp';
-        Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
-        
-        $product->images()->create([
-            'image_path' => $path,
-            'is_main' => false, // New images are NOT main unless you want to change that
-            'order' => $product->images()->count() + 1,
-        ]);
-    }
-}
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                
+                $product->images()->create([
+                    'image_path' => $path,
+                    'is_main' => false,
+                    'order' => $product->images()->count() + 1,
+                ]);
+            }
+        }
 
         return redirect()->route('seller.products.index')
             ->with('success', 'Product updated successfully!');
