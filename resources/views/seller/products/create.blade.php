@@ -56,7 +56,7 @@
                         {{-- Images --}}
                         <div class="mb-4">
                             <x-input-label for="images" value="Images (first image will be the main image)" />
-                           <input id="images" name="images[]" type="file" multiple accept="image/*"
+                            <input id="images" name="images[]" type="file" multiple accept="image/*"
                                 class="mt-1 block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded file:border-0
@@ -67,16 +67,16 @@
 
                         <div class="flex gap-4">
                             <button type="submit" id="submit-btn"
-                            class="cursor-pointer relative z-10 w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-6 py-3 text-center">
-                            <span id="btn-text">Create Product</span>
-                            <span id="btn-loading" class="hidden">
-                                <svg class="inline w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                                </svg>
-                                Uploading...
-                            </span>
-                        </button>
+                                class="cursor-pointer relative z-10 w-full sm:w-auto text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-6 py-3 text-center">
+                                <span id="btn-text">Create Product</span>
+                                <span id="btn-loading" class="hidden">
+                                    <svg class="inline w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                                    </svg>
+                                    Uploading...
+                                </span>
+                            </button>
                             <a href="{{ route('seller.products.index') }}" class="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400">
                                 Cancel
                             </a>
@@ -86,13 +86,14 @@
             </div>
         </div>
     </div>
+
     <script>
         const form = document.getElementById('product-form');
         const btn = document.getElementById('submit-btn');
         const btnText = document.getElementById('btn-text');
         const btnLoading = document.getElementById('btn-loading');
-    
-        form.addEventListener('submit', function() {
+
+        form.addEventListener('submit', function(e) {
             btn.disabled = true;
             btn.classList.add('opacity-50', 'cursor-not-allowed');
             btnText.classList.add('hidden');
