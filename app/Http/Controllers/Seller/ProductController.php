@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Intervention\Image\Laravel\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -73,15 +75,20 @@ class ProductController extends Controller
         ]);
 
         // Upload images
-        foreach ($request->file('images') as $index => $image) {
-            $path = $image->store('products', 'public');
-
-            $product->images()->create([
-                'image_path' => $path,
-                'is_main' => $index === 0, // First image is main
-                'order' => $index + 1,
-            ]);
-        }
+foreach ($request->file('images') as $index => $image) {
+    // Resize image to max 800px width, keep aspect ratio
+    $resized = Image::read($image)->scale(width: 800);
+    
+    // Save to storage
+    $path = 'products/' . uniqid() . '.webp';
+    Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
+    
+    $product->images()->create([
+        'image_path' => $path,
+        'is_main' => $index === 0,
+        'order' => $index + 1,
+    ]);
+}
 
         return redirect()->route('seller.products.index')
             ->with('success', 'Product created! Share link: ' . url('/p/' . $uniqueLink));
@@ -129,17 +136,21 @@ class ProductController extends Controller
         ]);
 
         // Upload new images if provided
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $path = $image->store('products', 'public');
-
-                $product->images()->create([
-                    'image_path' => $path,
-                    'is_main' => false,
-                    'order' => $product->images()->count() + 1,
-                ]);
-            }
-        }
+        // Upload images
+foreach ($request->file('images') as $index => $image) {
+    // Resize image to max 800px width, keep aspect ratio
+    $resized = Image::read($image)->scale(width: 800);
+    
+    // Save to storage
+    $path = 'products/' . uniqid() . '.webp';
+    Storage::disk('public')->put($path, $resized->toWebp(quality: 80));
+    
+    $product->images()->create([
+        'image_path' => $path,
+        'is_main' => $index === 0,
+        'order' => $index + 1,
+    ]);
+}
 
         return redirect()->route('seller.products.index')
             ->with('success', 'Product updated successfully!');
