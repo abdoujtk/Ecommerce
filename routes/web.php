@@ -89,6 +89,17 @@ Route::middleware(['auth'])->prefix('seller')->name('seller.')->group(function (
 });
 
 
+Route::get('/debug-images', function () {
+    $products = \App\Models\Product::with('images')->get();
+    return $products->map(function($p) {
+        return [
+            'name' => $p->name,
+            'images_count' => $p->images->count(),
+            'paths' => $p->images->pluck('image_path')->toArray(),
+        ];
+    });
+});
+
 
 
 
